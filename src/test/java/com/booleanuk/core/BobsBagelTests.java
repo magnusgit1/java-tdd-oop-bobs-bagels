@@ -19,17 +19,24 @@ public class BobsBagelTests {
         Bagel bagelEverything = new Bagel(EVERYTHING);
         Bagel bagelSesame = new Bagel(SESAME);
 
-        // test getPrice methods
+        Filling hamFilling = new Filling(HAM);
+
+        // test getPrice method and addFilling
 
         double onionPrice = bagelOnion.getPrice();
         double plainPrice = bagelPlain.getPrice();
         double everythingPrice = bagelEverything.getPrice();
         double sesamePrice = bagelSesame.getPrice();
 
+        bagelOnion.addFilling(hamFilling);
+
         Assertions.assertEquals(0.49, onionPrice);
         Assertions.assertEquals(0.39, plainPrice);
         Assertions.assertEquals(0.49, everythingPrice);
         Assertions.assertEquals(0.49, sesamePrice);
+
+
+        Assertions.assertEquals(hamFilling, bagelOnion.getFilling().getFirst());
     }
 
     @Test
@@ -42,7 +49,7 @@ public class BobsBagelTests {
         Filling fillingSmokedSalmon = new Filling(SMOKED_SALMON);
         Filling fillingHam = new Filling(HAM);
 
-        // test getPrice methods
+        // test getPrice method
 
         double baconPrice = fillingBacon.getPrice();
         double eggPrice = fillingEgg.getPrice();
@@ -68,7 +75,7 @@ public class BobsBagelTests {
         Coffee coffeeCappuccino = new Coffee(CAPPUCCINO);
         Coffee coffeeLatte = new Coffee(LATTE);
 
-        // test getPrice methods
+        // test getPrice method
 
         double blackPrice = coffeeBlack.getPrice();
         double whitePrice = coffeeWhite.getPrice();

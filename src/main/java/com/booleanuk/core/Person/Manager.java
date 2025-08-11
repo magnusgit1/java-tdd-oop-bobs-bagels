@@ -1,4 +1,14 @@
 package com.booleanuk.core.Person;
 
-public class Manager {
+import com.booleanuk.core.BasketCapacity;
+
+public class Manager extends Person{
+
+    public Manager(String name) {
+        super(name);
+    }
+
+    public boolean changeBasketCapacity(BasketCapacity basketCapacity, int capacity){
+        return basketCapacity.setCapacity(capacity);
+    }
 }

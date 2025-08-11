@@ -3,6 +3,10 @@ package com.booleanuk.core;
 import com.booleanuk.core.Item.Bagel.*;
 import com.booleanuk.core.Item.Filling.*;
 import com.booleanuk.core.Item.Coffee.*;
+import com.booleanuk.core.Person.Customer;
+import com.booleanuk.core.Person.Manager;
+import com.booleanuk.core.Person.Member;
+import com.booleanuk.core.Person.Person;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -136,7 +140,9 @@ public class BobsBagelTests {
 
         Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
 
-        Basket basket = new Basket(10, inventory);
+        BasketCapacity basketCapacity = new BasketCapacity(10);
+
+        Basket basket = new Basket(basketCapacity.getCapacity(), inventory);
 
         Bagel bagelOnion = new Bagel(ONION);
         Bagel bagelPlain = new Bagel(PLAIN);
@@ -163,20 +169,78 @@ public class BobsBagelTests {
     @Test
     public void testPerson(){
 
+        Person person1 = new Person("Odd");
+        Person person2 = new Person("Jimmy");
+
+        Assertions.assertEquals("Odd", person1.getName());
+        Assertions.assertNotEquals("jim", person2.getName());
     }
 
     @Test
     public void testMember(){
 
+        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
+        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
+        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+
+        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+
+        BasketCapacity basketCapacity = new BasketCapacity(1);
+
+        Basket basket = new Basket(basketCapacity.getCapacity(), inventory);
+        Basket basket2 = new Basket(basketCapacity.getCapacity(), inventory);
+
+        Member member1 = new Member("Cody", 5, basket);
+        Member member2 = new Member("Bob", 6, basket2);
+
+        Bagel bagel = new Bagel(ONION);
+
+        Assertions.assertTrue(member1.addItemToBasket(bagel));
+        Assertions.assertFalse(member1.addItemToBasket(bagel));
+        Assertions.assertTrue(member2.addItemToBasket(bagel));
+        Assertions.assertTrue(member2.removeItemFromBasket(bagel));
+        Assertions.assertEquals("Cody", member1.getName());
+        Assertions.assertEquals(5, member1.getMemberId());
     }
 
     @Test
     public void testCustomer(){
 
+        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
+        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
+        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+
+        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+
+        BasketCapacity basketCapacity = new BasketCapacity(1);
+
+        Basket basket = new Basket(basketCapacity.getCapacity(), inventory);
+        Basket basket2 = new Basket(basketCapacity.getCapacity(), inventory);
+
+        Customer customer1 = new Customer("Ray", 10, basket, 19);
+        Customer customer2 = new Customer("Bob", 5, basket2, 21);
+
+        Bagel bagel = new Bagel(ONION);
+
+        Assertions.assertTrue(customer1.addItemToBasket(bagel));
+        Assertions.assertFalse(customer1.addItemToBasket(bagel));
+        Assertions.assertTrue(customer2.addItemToBasket(bagel));
+        Assertions.assertTrue(customer2.removeItemFromBasket(bagel));
+        Assertions.assertEquals("Ray", customer1.getName());
+        Assertions.assertEquals(10, customer1.getMemberId());
+        Assertions.assertEquals(21, customer2.getCustomerId());
     }
 
     @Test
     public void testManager(){
+
+        Manager manager = new Manager("Johnny");
+        BasketCapacity basketCapacity = new BasketCapacity(10);
+
+        manager.changeBasketCapacity(basketCapacity, 12);
+
+        Assertions.assertEquals(12, basketCapacity.basketCapacity);
+        Assertions.assertFalse(manager.changeBasketCapacity(basketCapacity, 12));
 
     }
 }

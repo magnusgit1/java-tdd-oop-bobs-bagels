@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Basket {
     private final int capacity;
-    private final List<Item> items;
+    private final List<Item<Object>> items;
     private final Inventory inventory;
 
     public Basket(int capacity, Inventory inventory){
@@ -17,7 +17,7 @@ public class Basket {
     }
 
     public boolean add(Item item){
-        if (inventory.exists(item)){
+        if (inventory.exists(item) && !isFull()){
             items.add(item);
             return true;
         } else { return false; }

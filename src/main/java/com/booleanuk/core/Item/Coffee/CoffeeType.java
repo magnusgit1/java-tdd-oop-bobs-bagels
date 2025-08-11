@@ -1,4 +1,4 @@
-package com.booleanuk.core.Coffee;
+package com.booleanuk.core.Item.Coffee;
 
 public enum CoffeeType{
     BLACK,

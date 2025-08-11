@@ -1,4 +1,4 @@
-package com.booleanuk.core.Bagel;
+package com.booleanuk.core.Item.Bagel;
 
 public enum BagelType{
     ONION,

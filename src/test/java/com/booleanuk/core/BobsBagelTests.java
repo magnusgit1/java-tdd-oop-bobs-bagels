@@ -1,14 +1,18 @@
 package com.booleanuk.core;
 
-import com.booleanuk.core.Bagel.Bagel;
-import com.booleanuk.core.Coffee.Coffee;
-import com.booleanuk.core.Filling.Filling;
+import com.booleanuk.core.Item.Bagel.*;
+import com.booleanuk.core.Item.Filling.*;
+import com.booleanuk.core.Item.Coffee.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static com.booleanuk.core.Bagel.BagelType.*;
-import static com.booleanuk.core.Coffee.CoffeeType.*;
-import static com.booleanuk.core.Filling.FillingType.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.booleanuk.core.Item.Bagel.BagelType.*;
+import static com.booleanuk.core.Item.Filling.FillingType.*;
+import static com.booleanuk.core.Item.Coffee.CoffeeType.*;
 
 public class BobsBagelTests {
 
@@ -93,10 +97,66 @@ public class BobsBagelTests {
     @Test
     public void testItem(){
 
+        // Testing the Item interface
+
+        Bagel itemBagel = new Bagel(ONION);
+        Filling itemFilling = new Filling(HAM);
+
+        itemBagel.addFilling(itemFilling);
+
+        Assertions.assertEquals(0.49, itemBagel.getPrice());
+        Assertions.assertEquals(itemFilling, itemBagel.getFilling().getFirst());
+
+    }
+
+    @Test
+    public void testInventory(){
+
+        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
+        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
+        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+
+        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+
+        Bagel bagel = new Bagel(PLAIN);
+        Filling filling = new Filling(HAM);
+        Coffee coffee = new Coffee(WHITE);
+
+        Assertions.assertTrue(inventory.exists(bagel));
+        Assertions.assertTrue(inventory.exists(filling));
+        Assertions.assertTrue(inventory.exists(coffee));
     }
 
     @Test
     public void testBasket(){
+
+        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
+        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
+        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+
+        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+
+        Basket basket = new Basket(10, inventory);
+
+        Bagel bagelOnion = new Bagel(ONION);
+        Bagel bagelPlain = new Bagel(PLAIN);
+        Filling fillingCheese = new Filling(CHEESE);
+        Filling fillingHam = new Filling(HAM);
+
+        basket.add(bagelPlain);
+        basket.add(bagelOnion);
+        basket.add(fillingCheese);
+        basket.add(fillingHam);
+
+        double expectedSum = bagelPlain.getPrice() + bagelOnion.getPrice() + fillingCheese.getPrice() + fillingHam.getPrice();
+
+        Assertions.assertFalse(basket.isFull());
+        Assertions.assertEquals(expectedSum, basket.total());
+        Assertions.assertTrue(basket.add(bagelOnion));
+
+        basket.remove(bagelPlain);
+
+        Assertions.assertFalse(basket.remove(bagelPlain));
 
     }
 
@@ -117,11 +177,6 @@ public class BobsBagelTests {
 
     @Test
     public void testManager(){
-
-    }
-
-    @Test
-    public void testInventory(){
 
     }
 }

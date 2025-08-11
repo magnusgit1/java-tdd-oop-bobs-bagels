@@ -1,4 +1,4 @@
-package com.booleanuk.core.Filling;
+package com.booleanuk.core.Item.Filling;
 
 public enum FillingType{
     BACON,

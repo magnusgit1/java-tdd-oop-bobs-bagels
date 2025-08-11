@@ -1,23 +1,29 @@
-package com.booleanuk.core.Bagel;
+package com.booleanuk.core.Item.Bagel;
 
-import com.booleanuk.core.Filling.Filling;
+import com.booleanuk.core.Item.Filling.Filling;
+import com.booleanuk.core.Item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bagel {
-    List<Filling> filling;
-    BagelType type;
-    double price;
+public class Bagel implements Item<BagelType> {
+    private final List<Filling> filling;
+    private final double price;
+    private final BagelType type;
 
     public Bagel(BagelType type){
-        this.type = type;
         this.price = type.equals(BagelType.PLAIN)? 0.39 : 0.49;
         filling = new ArrayList<>();
+        this.type = type;
     }
 
     public double getPrice(){
         return this.price;
+    }
+
+    @Override
+    public BagelType getType(){
+        return this.type;
     }
 
     public List<Filling> getFilling(){

@@ -6,6 +6,7 @@ import com.booleanuk.core.Item.Item;
 public class Coffee implements Item {
     private final double price;
     private final String type;
+    private final String sku;
 
     public Coffee(CoffeeType type){
         this.price = switch(type){
@@ -14,6 +15,16 @@ public class Coffee implements Item {
             default -> 1.29;
         };
         this.type = type.toString();
+        this.sku = switch(type){
+            case BLACK -> "COFB";
+            case WHITE -> "COFW";
+            case CAPPUCCINO -> "COFC";
+            case LATTE -> "COFL";
+        };
+    }
+
+    public String getSku(){
+        return this.sku;
     }
 
     public double getPrice(){

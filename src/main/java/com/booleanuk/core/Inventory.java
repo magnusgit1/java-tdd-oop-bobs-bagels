@@ -12,12 +12,7 @@ public class Inventory {
     }
 
     public void increaseCount(Item item){
-        if (!mapOfItems.containsKey(item.getType())){
-            mapOfItems.put(item.getType(), 1);
-        }
-        else {
-            this.mapOfItems.compute(item.getType(), (k, currCount) -> currCount + 1);
-        }
+        mapOfItems.put(item.getType(), mapOfItems.getOrDefault(item.getType(), 0) + 1);
     }
 
     public boolean reduceCount(Item item){
@@ -28,7 +23,7 @@ public class Inventory {
                 return false;
             }
             else {
-                this.mapOfItems.compute(item.getType(), (k, currCount) -> currCount - 1);
+                mapOfItems.put(item.getType(), mapOfItems.getOrDefault(item.getType(), 0) - 1);
                 return true;
             }
         }

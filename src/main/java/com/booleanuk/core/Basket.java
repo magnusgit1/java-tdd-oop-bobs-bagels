@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Basket {
     private final int capacity;
-    private final List<Item<Object>> items;
+    private final List<Item> items;
     private final Inventory inventory;
 
     public Basket(int capacity, Inventory inventory){
@@ -19,6 +19,7 @@ public class Basket {
     public boolean add(Item item){
         if (inventory.exists(item) && !isFull()){
             items.add(item);
+            inventory.reduceCount(item);
             return true;
         } else { return false; }
     }
@@ -26,6 +27,7 @@ public class Basket {
     public boolean remove(Item item){
         if (items.contains(item)){
             items.remove(item);
+            inventory.increaseCount(item);
             return true;
         } else { return false; }
     }
@@ -38,6 +40,4 @@ public class Basket {
     public double total(){
         return items.stream().map(Item::getPrice).reduce(0.0, Double::sum);
     }
-
-
 }

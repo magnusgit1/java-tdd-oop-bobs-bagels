@@ -1,24 +1,40 @@
 package com.booleanuk.core;
 
-import com.booleanuk.core.Item.Bagel.BagelType;
-import com.booleanuk.core.Item.Coffee.CoffeeType;
-import com.booleanuk.core.Item.Filling.FillingType;
 import com.booleanuk.core.Item.Item;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class Inventory {
-    List<BagelType> listOfBagels;
-    List<FillingType> listOfFillings;
-    List<CoffeeType> listOfCoffees;
+    HashMap<String, Integer> mapOfItems;
 
-    public Inventory(List<BagelType> bagels, List<FillingType> fillings, List<CoffeeType> coffees){
-        this.listOfBagels = bagels;
-        this.listOfFillings = fillings;
-        this.listOfCoffees = coffees;
+    public Inventory(HashMap<String, Integer> mapOfItems){
+        this.mapOfItems = mapOfItems;
+    }
+
+    public void increaseCount(Item item){
+        if (!mapOfItems.containsKey(item.getType())){
+            mapOfItems.put(item.getType(), 1);
+        }
+        else {
+            this.mapOfItems.compute(item.getType(), (k, currCount) -> currCount + 1);
+        }
+    }
+
+    public boolean reduceCount(Item item){
+        if (!mapOfItems.containsKey(item.getType())){
+            return false;
+        } else {
+            if (mapOfItems.get(item.getType()) < 1) {
+                return false;
+            }
+            else {
+                this.mapOfItems.compute(item.getType(), (k, currCount) -> currCount - 1);
+                return true;
+            }
+        }
     }
 
     public boolean exists(Item item){
-        return listOfBagels.contains(item.getType()) || listOfFillings.contains(item.getType()) || listOfCoffees.contains(item.getType());
+        return mapOfItems.containsKey(item.getType()) && mapOfItems.get(item.getType()) > 0;
     }
 }

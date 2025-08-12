@@ -6,15 +6,15 @@ import com.booleanuk.core.Item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bagel implements Item<BagelType> {
+public class Bagel implements Item {
     private final List<Filling> filling;
     private final double price;
-    private final BagelType type;
+    private final String type;
 
     public Bagel(BagelType type){
         this.price = type.equals(BagelType.PLAIN)? 0.39 : 0.49;
         filling = new ArrayList<>();
-        this.type = type;
+        this.type = type.toString();
     }
 
     public double getPrice(){
@@ -22,7 +22,7 @@ public class Bagel implements Item<BagelType> {
     }
 
     @Override
-    public BagelType getType(){
+    public String getType(){
         return this.type;
     }
 

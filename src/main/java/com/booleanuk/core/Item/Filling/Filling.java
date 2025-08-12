@@ -2,13 +2,13 @@ package com.booleanuk.core.Item.Filling;
 
 import com.booleanuk.core.Item.Item;
 
-public class Filling implements Item<FillingType> {
+public class Filling implements Item {
     private final double price;
-    private final FillingType type;
+    private final String type;
 
     public Filling(FillingType type){
         this.price = 0.12;
-        this.type = type;
+        this.type = type.toString();
     }
 
     public double getPrice(){
@@ -16,7 +16,7 @@ public class Filling implements Item<FillingType> {
     }
 
     @Override
-    public FillingType getType(){
+    public String getType(){
         return this.type;
     }
 }

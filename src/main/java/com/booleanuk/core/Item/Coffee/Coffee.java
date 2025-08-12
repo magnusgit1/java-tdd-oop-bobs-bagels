@@ -3,9 +3,9 @@ package com.booleanuk.core.Item.Coffee;
 
 import com.booleanuk.core.Item.Item;
 
-public class Coffee implements Item<CoffeeType> {
+public class Coffee implements Item {
     private final double price;
-    private final CoffeeType type;
+    private final String type;
 
     public Coffee(CoffeeType type){
         this.price = switch(type){
@@ -13,7 +13,7 @@ public class Coffee implements Item<CoffeeType> {
             case WHITE -> 1.19;
             default -> 1.29;
         };
-        this.type = type;
+        this.type = type.toString();
     }
 
     public double getPrice(){
@@ -21,7 +21,7 @@ public class Coffee implements Item<CoffeeType> {
     }
 
     @Override
-    public CoffeeType getType(){
+    public String getType(){
         return this.type;
     }
 }

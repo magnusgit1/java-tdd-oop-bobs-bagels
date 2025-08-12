@@ -10,9 +10,7 @@ import com.booleanuk.core.Person.Person;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 import static com.booleanuk.core.Item.Bagel.BagelType.*;
 import static com.booleanuk.core.Item.Filling.FillingType.*;
@@ -116,17 +114,28 @@ public class BobsBagelTests {
     @Test
     public void testInventory(){
 
-        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
-        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
-        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+        HashMap<String, Integer> mapOfItems = new HashMap<>(){{
+            put(PLAIN.toString(), 5);
+            put(ONION.toString(), 5);
+            put(EVERYTHING.toString(), 4);
+            put(BACON.toString(), 7);
+            put(CHEESE.toString(), 1);
+            put(WHITE.toString(), 3);
+            put(LATTE.toString(), 2);
+            put(HAM.toString(), 4);
+        }};
 
-        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+        Bagel bagel1 = new Bagel(SESAME);
 
-        Bagel bagel = new Bagel(PLAIN);
+        Inventory inventory = new Inventory(mapOfItems);
+
+        Bagel bagel2 = new Bagel(PLAIN);
         Filling filling = new Filling(HAM);
         Coffee coffee = new Coffee(WHITE);
 
-        Assertions.assertTrue(inventory.exists(bagel));
+        Assertions.assertTrue(inventory.exists(bagel2));
+        Assertions.assertFalse(inventory.reduceCount(bagel1));
+        Assertions.assertEquals(5, inventory.mapOfItems.get(PLAIN.toString()));
         Assertions.assertTrue(inventory.exists(filling));
         Assertions.assertTrue(inventory.exists(coffee));
     }
@@ -134,11 +143,18 @@ public class BobsBagelTests {
     @Test
     public void testBasket(){
 
-        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
-        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
-        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+        HashMap<String, Integer> mapOfItems = new HashMap<>(){{
+            put(PLAIN.toString(), 5);
+            put(ONION.toString(), 5);
+            put(EVERYTHING.toString(), 4);
+            put(BACON.toString(), 7);
+            put(HAM.toString(), 3);
+            put(CHEESE.toString(), 1);
+            put(WHITE.toString(), 3);
+            put(LATTE.toString(), 2);
+        }};
 
-        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+        Inventory inventory = new Inventory(mapOfItems);
 
         BasketCapacity basketCapacity = new BasketCapacity(10);
 
@@ -159,9 +175,11 @@ public class BobsBagelTests {
         Assertions.assertFalse(basket.isFull());
         Assertions.assertEquals(expectedSum, basket.total());
         Assertions.assertTrue(basket.add(bagelOnion));
+        Assertions.assertEquals(4, inventory.mapOfItems.get(PLAIN.toString()));
 
         basket.remove(bagelPlain);
 
+        Assertions.assertEquals(5, inventory.mapOfItems.get(PLAIN.toString()));
         Assertions.assertFalse(basket.remove(bagelPlain));
 
     }
@@ -179,11 +197,18 @@ public class BobsBagelTests {
     @Test
     public void testMember(){
 
-        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
-        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
-        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+        HashMap<String, Integer> mapOfItems = new HashMap<>(){{
+            put(PLAIN.toString(), 5);
+            put(ONION.toString(), 5);
+            put(EVERYTHING.toString(), 4);
+            put(BACON.toString(), 7);
+            put(HAM.toString(), 3);
+            put(CHEESE.toString(), 1);
+            put(WHITE.toString(), 3);
+            put(LATTE.toString(), 2);
+        }};
 
-        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+        Inventory inventory = new Inventory(mapOfItems);
 
         BasketCapacity basketCapacity = new BasketCapacity(1);
 
@@ -206,11 +231,18 @@ public class BobsBagelTests {
     @Test
     public void testCustomer(){
 
-        List<BagelType> listOfBagels = new ArrayList<>(Arrays.asList(PLAIN, ONION, EVERYTHING, SESAME));
-        List<FillingType> listOfFillings = new ArrayList<>(Arrays.asList(BACON, EGG, CHEESE, CREAM_CHEESE, SMOKED_SALMON, HAM));
-        List<CoffeeType> listOfCoffees = new ArrayList<>(Arrays.asList(BLACK, WHITE, CAPPUCCINO, LATTE));
+        HashMap<String, Integer> mapOfItems = new HashMap<>(){{
+            put(PLAIN.toString(), 5);
+            put(ONION.toString(), 5);
+            put(EVERYTHING.toString(), 4);
+            put(BACON.toString(), 7);
+            put(HAM.toString(), 3);
+            put(CHEESE.toString(), 1);
+            put(WHITE.toString(), 3);
+            put(LATTE.toString(), 2);
+        }};
 
-        Inventory inventory = new Inventory(listOfBagels, listOfFillings, listOfCoffees);
+        Inventory inventory = new Inventory(mapOfItems);
 
         BasketCapacity basketCapacity = new BasketCapacity(1);
 

@@ -1,6 +1,6 @@
 package com.booleanuk.core.Item;
 
-public interface Item<T> {
+public interface Item {
     double getPrice();
-    T getType();
+    String getType();
 }

@@ -1,7 +1,5 @@
 package com.booleanuk.core;
-
 import com.booleanuk.core.Item.Item;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,12 +42,10 @@ public class Basket {
     }
 
     public boolean isFull() {
-        return items.size() == capacity;
-
+        return items.size() >= capacity;
     }
 
     public double total(){
-
         return items.stream().map(Item::getPrice).reduce(0.0, Double::sum) - findDiscount();
     }
 
@@ -75,6 +71,11 @@ public class Basket {
     }
 
     public void printReceipt(){
+        // A little bit messy, but I didn't want to rewrite the other parts of the code
+        // to be able to simplify this one, but it works.
+        // There is definitely a better way to structure the print-statements,
+        // but I figured that weren't the main objective of the task anyway.
+
         HashMap<String, Integer> res = new HashMap<>();
         for (Item item : items){
             res.put(item.getType(), res.getOrDefault(item.getType(), 0) + 1);
@@ -92,8 +93,11 @@ public class Basket {
         });
         String lastPart =
                 "-------------------------------------" + "\n" +
-                "Total                           £" + String.format("%.2f", total()) + "\n\n" +
-                "            Thank you \n         for your order!\n\n";
+                "Sum                           £" + String.format("%.2f", total()+findDiscount()) + "\n" +
+                "Discount                    (-£" + String.format("%.2f", findDiscount()) +  ")\n"  +
+                "Total                         £" + String.format("%.2f", total()) +
+                "\n\nYou saved a total of:          £" + String.format("%.2f", findDiscount()) +
+                "\n\n            Thank you \n         for your order!\n\n";
 
         System.out.println(lastPart);
     }

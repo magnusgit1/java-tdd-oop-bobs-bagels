@@ -1,8 +1,6 @@
 package com.booleanuk.core.Item.Bagel;
-
 import com.booleanuk.core.Item.Filling.Filling;
 import com.booleanuk.core.Item.Item;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,6 @@ public class Bagel implements Item {
         return this.price;
     }
 
-    @Override
     public String getType(){
         return this.type;
     }
@@ -44,5 +41,4 @@ public class Bagel implements Item {
     public void addFilling(Filling filling){
         this.filling.add(filling);
     }
-
 }

@@ -1,5 +1,4 @@
 package com.booleanuk.core.Person;
-
 import com.booleanuk.core.Basket;
 import com.booleanuk.core.Item.Bagel.Bagel;
 import com.booleanuk.core.Item.Filling.Filling;

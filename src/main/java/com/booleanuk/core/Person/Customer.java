@@ -1,5 +1,4 @@
 package com.booleanuk.core.Person;
-
 import com.booleanuk.core.Basket;
 
 public class Customer extends Member{

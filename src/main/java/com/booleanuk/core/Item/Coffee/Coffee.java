@@ -1,6 +1,4 @@
 package com.booleanuk.core.Item.Coffee;
-
-
 import com.booleanuk.core.Item.Item;
 
 public class Coffee implements Item {

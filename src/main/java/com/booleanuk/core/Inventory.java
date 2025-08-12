@@ -1,7 +1,5 @@
 package com.booleanuk.core;
-
 import com.booleanuk.core.Item.Item;
-
 import java.util.HashMap;
 
 public class Inventory {

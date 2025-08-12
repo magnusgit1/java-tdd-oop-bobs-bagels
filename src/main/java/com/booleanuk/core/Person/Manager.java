@@ -1,5 +1,4 @@
 package com.booleanuk.core.Person;
-
 import com.booleanuk.core.BasketCapacity;
 
 public class Manager extends Person{
